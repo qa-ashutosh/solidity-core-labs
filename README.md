@@ -20,7 +20,7 @@ This is a living portfolio of EVM mastery, built one phase at a time.
 
 | Phase | Lab | Status | Concept |
 |-------|-----|--------|---------|
-| 01 | `integer-overflow` | 🔜 | Arithmetic safety, `unchecked` blocks, type truncation |
+| 01 | `integer-overflow` | ✅ | Arithmetic safety, `unchecked` blocks, type truncation |
 | 02 | `storage-layout` | 🔜 | Slot packing, collision, proxy risks |
 | 03 | `calldata-vs-memory` | 🔜 | Data location costs & ABI encoding |
 | 04 | `reentrancy` | 🔜 | CEI pattern, guards, cross-function attacks |
