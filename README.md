@@ -35,6 +35,79 @@ This is a living portfolio of EVM mastery, built one phase at a time.
 
 ---
 
+## How to Run the Labs
+
+### Prerequisites
+
+**Install Foundry** (one-time setup):
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
+
+Verify installation:
+
+```bash
+forge --version
+# forge 0.2.x (expected)
+```
+
+### Clone & Install
+
+```bash
+git clone https://github.com/qa-ashutosh/solidity-core-labs.git
+cd solidity-core-labs
+forge install foundry-rs/forge-std --no-commit
+```
+
+### Run All Labs
+
+```bash
+# Run every test in the repo
+forge test
+
+# Run with verbosity (see logs + revert reasons)
+forge test -vvv
+
+# Run full gas report across all labs
+forge test --gas-report
+```
+
+### Run a Specific Lab
+
+Each lab lives under `test/<lab-name>/`. To scope to one lab:
+
+```bash
+# Pattern: forge test --match-path "test/<lab-folder>/*"
+forge test --match-path "test/01-integer-overflow/*" -v
+```
+
+### Run a Single Test
+
+```bash
+# Pattern: forge test --match-test "<test_function_name>"
+forge test --match-test "test_uncheckedAdd_wrapsToZeroOnOverflow" -vvv
+```
+
+### Coverage
+
+```bash
+# Full repo coverage
+forge coverage
+
+# Scoped to one lab
+forge coverage --match-path "test/01-integer-overflow/*"
+```
+
+### Build Only (no tests)
+
+```bash
+forge build
+```
+
+---
+
 ## Tools
 
 - **Foundry** — testing, fuzzing, invariant testing

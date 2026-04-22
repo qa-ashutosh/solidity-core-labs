@@ -1,1 +1,19 @@
+# Foundry build artifacts — fully reproducible via `forge build`
+out/
+
+# Foundry internal build cache — machine-specific
+cache/
+
+# Foundry dependency lockfile — not needed for a labs repo
+foundry.lock
+
+# Compiler output (if using additional tooling)
+artifacts/
+
+# macOS
 .DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp

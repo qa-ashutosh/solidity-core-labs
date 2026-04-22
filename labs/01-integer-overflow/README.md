@@ -48,15 +48,6 @@ Modern risk: **any `unchecked` block written for gas savings without re-proving 
 
 ---
 
-## Key Takeaways
-
-- `unchecked` is not "optimized" — it is "unguarded." Treat it like inline assembly.
-- Type truncation (`uint256 → uint8`) is silent data loss, not a revert.
-- Auditors must trace every path through `unchecked` and verify the invariant holds algebraically.
-- "This value can never be that large" is not a proof. It is an assumption.
-
----
-
 ## Files
 
 | File | Purpose |
@@ -64,6 +55,75 @@ Modern risk: **any `unchecked` block written for gas savings without re-proving 
 | `IntegerMath.sol` | Checked vs unchecked arithmetic, truncating casts |
 | `UnsafeCounter.sol` | Pre-0.8 overflow simulation (pragma 0.7.6) |
 | `../../test/01-integer-overflow/IntegerMath.t.sol` | Foundry tests |
+
+---
+
+## How to Run This Lab
+
+> Requires Foundry. If you haven't installed it yet, see the [root README](../../README.md#how-to-run-the-labs).
+
+### 1. Run all tests for this lab
+
+```bash
+# From repo root
+forge test --match-path "test/01-integer-overflow/*" -v
+```
+
+Expected output:
+```
+[PASS] test_checkedAdd_revertsOnOverflow()
+[PASS] test_checkedSub_revertsOnUnderflow()
+[PASS] test_truncatingCast_silentlyDiscardsBits()
+[PASS] test_uncheckedAdd_wrapsToZeroOnOverflow()
+[PASS] test_uncheckedMul_wrapsOnLargeInputs()
+[PASS] test_uncheckedSub_wrapsToMaxOnUnderflow()
+[PASS] test_safeUncheckedLoop_correctSumForBoundedArray()
+```
+
+### 2. Run with verbose trace (see revert reasons)
+
+```bash
+forge test --match-path "test/01-integer-overflow/*" -vvv
+```
+
+### 3. Run a single test
+
+```bash
+forge test --match-test "test_uncheckedMul_wrapsOnLargeInputs" -vvv
+```
+
+### 4. Gas report for this lab
+
+```bash
+forge test --match-path "test/01-integer-overflow/*" --gas-report
+```
+
+Look for the delta between `checkedAdd` and `uncheckedAdd` — this is the ~3 gas cost of the overflow check.
+
+### 5. Check test coverage
+
+```bash
+forge coverage --match-path "test/01-integer-overflow/*"
+```
+
+### ⚠️ Note on UnsafeCounter.sol
+
+`UnsafeCounter.sol` uses `pragma solidity ^0.7.6` intentionally. Foundry handles multi-version compilation automatically via `foundry.toml`. You do **not** need to change the compiler setting — it will compile both contracts correctly.
+
+To verify the overflow behavior directly, you can inspect the contract in isolation:
+
+```bash
+forge build --contracts labs/01-integer-overflow/UnsafeCounter.sol
+```
+
+---
+
+## Key Takeaways
+
+- `unchecked` is not "optimized" — it is "unguarded." Treat it like inline assembly.
+- Type truncation (`uint256 → uint8`) is silent data loss, not a revert.
+- Auditors must trace every path through `unchecked` and verify the invariant holds algebraically.
+- "This value can never be that large" is not a proof. It is an assumption.
 
 ---
 
