@@ -1,0 +1,12 @@
+[profile.default]
+src = "labs"
+out = "out"
+libs = ["lib"]
+test = "test"
+solc_version = "0.8.24"
+
+[profile.default.fuzz]
+runs = 256
+
+[profile.default.invariant]
+runs = 64
