@@ -21,7 +21,7 @@ This is a living portfolio of EVM mastery, built one phase at a time.
 | Phase | Lab | Status | Concept |
 |-------|-----|--------|---------|
 | 01 | `integer-overflow` | ✅ | Arithmetic safety, `unchecked` blocks, type truncation |
-| 02 | `storage-layout` | 🔜 | Slot packing, collision, proxy risks |
+| 02 | `storage-layout` | ✅ | Slot packing, collision, proxy risks |
 | 03 | `calldata-vs-memory` | 🔜 | Data location costs & ABI encoding |
 | 04 | `reentrancy` | 🔜 | CEI pattern, guards, cross-function attacks |
 | 05 | `access-control` | 🔜 | tx.origin, msg.sender, role misuse |
@@ -50,13 +50,12 @@ Verify installation:
 
 ```bash
 forge --version
-# forge 0.2.x (expected)
 ```
 
 ### Clone & Install
 
 ```bash
-git clone https://github.com/qa-ashutosh/solidity-core-labs.git
+git clone https://github.com/<your-username>/solidity-core-labs.git
 cd solidity-core-labs
 forge install foundry-rs/forge-std --no-commit
 ```
@@ -70,40 +69,30 @@ forge test
 # Run with verbosity (see logs + revert reasons)
 forge test -vvv
 
-# Run full gas report across all labs
+# Full gas report across all labs
 forge test --gas-report
 ```
 
 ### Run a Specific Lab
 
-Each lab lives under `test/<lab-name>/`. To scope to one lab:
-
 ```bash
 # Pattern: forge test --match-path "test/<lab-folder>/*"
 forge test --match-path "test/01-integer-overflow/*" -v
+forge test --match-path "test/02-storage-layout/*" -v
 ```
 
 ### Run a Single Test
 
 ```bash
 # Pattern: forge test --match-test "<test_function_name>"
-forge test --match-test "test_uncheckedAdd_wrapsToZeroOnOverflow" -vvv
+forge test --match-test "test_collision_vulnerableLogicCorruptsImplementationPointer" -vvv
 ```
 
 ### Coverage
 
 ```bash
-# Full repo coverage
 forge coverage
-
-# Scoped to one lab
-forge coverage --match-path "test/01-integer-overflow/*"
-```
-
-### Build Only (no tests)
-
-```bash
-forge build
+forge coverage --match-path "test/02-storage-layout/*"
 ```
 
 ---
@@ -124,15 +113,6 @@ forge build
 /notes      → Audit notes, gotchas, mental models
 /scripts    → Deployment + interaction scripts
 ```
-
----
-
-## Who This Is For
-
-- Smart contract auditors building pattern libraries
-- Protocol engineers stress-testing mental models
-- Founders evaluating engineering depth
-- Developers who want to stop guessing and start *knowing*
 
 ---
 
