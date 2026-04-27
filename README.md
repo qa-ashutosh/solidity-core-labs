@@ -22,7 +22,7 @@ This is a living portfolio of EVM mastery, built one phase at a time.
 |-------|-----|--------|---------|
 | 01 | `integer-overflow` | ✅ | Arithmetic safety, `unchecked` blocks, type truncation |
 | 02 | `storage-layout` | ✅ | Slot packing, collision, proxy risks |
-| 03 | `calldata-vs-memory` | 🔜 | Data location costs & ABI encoding |
+| 03 | `calldata-vs-memory` | ✅ | Data locations, ghost write bug, memory expansion |
 | 04 | `reentrancy` | 🔜 | CEI pattern, guards, cross-function attacks |
 | 05 | `access-control` | 🔜 | tx.origin, msg.sender, role misuse |
 | 06 | `delegatecall-risks` | 🔜 | Context hijack, proxy storage collision |
@@ -46,8 +46,7 @@ curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
-Verify installation:
-
+Verify:
 ```bash
 forge --version
 ```
@@ -63,36 +62,30 @@ forge install foundry-rs/forge-std --no-commit
 ### Run All Labs
 
 ```bash
-# Run every test in the repo
 forge test
-
-# Run with verbosity (see logs + revert reasons)
 forge test -vvv
-
-# Full gas report across all labs
 forge test --gas-report
 ```
 
 ### Run a Specific Lab
 
 ```bash
-# Pattern: forge test --match-path "test/<lab-folder>/*"
 forge test --match-path "test/01-integer-overflow/*" -v
 forge test --match-path "test/02-storage-layout/*" -v
+forge test --match-path "test/03-calldata-vs-memory/*" -v
 ```
 
 ### Run a Single Test
 
 ```bash
-# Pattern: forge test --match-test "<test_function_name>"
-forge test --match-test "test_collision_vulnerableLogicCorruptsImplementationPointer" -vvv
+forge test --match-test "<test_function_name>" -vvv
 ```
 
 ### Coverage
 
 ```bash
 forge coverage
-forge coverage --match-path "test/02-storage-layout/*"
+forge coverage --match-path "test/03-calldata-vs-memory/*"
 ```
 
 ---
