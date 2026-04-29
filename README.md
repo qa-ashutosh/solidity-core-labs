@@ -23,7 +23,7 @@ This is a living portfolio of EVM mastery, built one phase at a time.
 | 01 | `integer-overflow` | ✅ | Arithmetic safety, `unchecked` blocks, type truncation |
 | 02 | `storage-layout` | ✅ | Slot packing, collision, proxy risks |
 | 03 | `calldata-vs-memory` | ✅ | Data locations, ghost write bug, memory expansion |
-| 04 | `reentrancy` | 🔜 | CEI pattern, guards, cross-function attacks |
+| 04 | `reentrancy` | ✅ | CEI pattern, reentrancy guard, live exploit |
 | 05 | `access-control` | 🔜 | tx.origin, msg.sender, role misuse |
 | 06 | `delegatecall-risks` | 🔜 | Context hijack, proxy storage collision |
 | 07 | `oracle-manipulation` | 🔜 | Spot price abuse, TWAP design |
@@ -73,6 +73,7 @@ forge test --gas-report
 forge test --match-path "test/01-integer-overflow/*" -v
 forge test --match-path "test/02-storage-layout/*" -v
 forge test --match-path "test/03-calldata-vs-memory/*" -v
+forge test --match-path "test/04-reentrancy/*" -v
 ```
 
 ### Run a Single Test
@@ -81,11 +82,18 @@ forge test --match-path "test/03-calldata-vs-memory/*" -v
 forge test --match-test "<test_function_name>" -vvv
 ```
 
+### See Full Attack Traces (Lab 04 specific)
+
+```bash
+forge test --match-test "test_attack_drainsVulnerableVault" -vvvv
+forge test --match-test "test_attack_failsAgainstSecureVault" -vvvv
+```
+
 ### Coverage
 
 ```bash
 forge coverage
-forge coverage --match-path "test/03-calldata-vs-memory/*"
+forge coverage --match-path "test/04-reentrancy/*"
 ```
 
 ---
